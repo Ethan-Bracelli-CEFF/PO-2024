@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </header>
         <main>
             <div class="container" style="margin-top: 25%;">
-                <form action="accueil.php" method="post">
+                <form action="" method="post">
                     <h1 class="text-center" style="font-size: 4em">Login :</h1>
                     <h2 class="text-center" style="margin-top:15%">Pseudo :</h2>
                     <input type="text" name="username" style="background-color: rgba(89, 112, 129, 0.5);; color: white; width: 50%; margin-left: 25%; margin-top: 5%" class="rounded-4 text-center border-0"><br>
