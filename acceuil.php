@@ -27,11 +27,11 @@
             <div style="background-color: #597081; color: white; padding: 5px" class="text-center"><h2>Ultimate Morpion Battle Ultra Simulator Extrem 2k24</h2></div>
         </header>
         <main>
-            <div class="container" style="margin-top: 25%;">
+            <div class="container" style="margin-top: 20vh;">
                 <h1 class="text-center" style="font-size: 4em">Login :</h1>
-                <h2 class="text-center" style="margin-top:15%">Pseudo :</h2>
+                <h2 class="text-center" style="margin-top:10vh">Pseudo :</h2>
                 <input type="text" style="background-color: rgba(89, 112, 129, 0.5);; color: white; width: 50%; margin-left: 25%; margin-top: 5%" class="rounded-4 text-center border-0"><br>
-                <button style="width:30%; color: white; background-color: #597081; padding: 5px; margin-left: 35%; margin-top: 25%" class="rounded-4 border-0">Confirmer</button>
+                <button style="width:30%; color: white; background-color: #597081; padding: 5px; margin-left: 35%; margin-top: 15vh" class="rounded-4 border-0">Confirmer</button>
             </div>
         </main>
         <footer>
