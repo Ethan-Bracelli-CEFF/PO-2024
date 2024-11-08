@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Title</title>
+        <title>Host</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -26,7 +26,7 @@
             <di style="display: flex; justify-content: center; margin-top: 10%"><img src="qrCode.png" alt="Qr code" style="height: 500px"></div>
         </main>
         <footer>
-            <div style="background-color: #597081; height: 50px; width: 100%; position:absolute; bottom:0" class="text-center"><h2 style="color: white; margin-top: 4px">Portes-ouvertes 2024 - Ethan^2 - tous droits réservés</h2></div>
+            <div style="background-color: #597081; height: 50px; width: 100%; position:absolute; bottom:0" class="text-center"><h2 style="color: white; margin-top: 4px">Portes-ouvertes 2024 - Ethan² - © tous droits réservés</h2></div>
         </footer>
         <!-- Bootstrap JavaScript Libraries -->
         <script
