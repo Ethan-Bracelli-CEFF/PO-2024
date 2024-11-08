@@ -23,7 +23,7 @@
         <div style="background-color: #597081; height: 150px" class="text-center"><h1 style="color: white; font-size: 3.5em">Ultimate Morpion Battle</h1><h1 style="color: white; font-size: 3.5em">Ultra Simulator Extrem 2k24</h1></div>
         </header>
         <main>
-            <di style="display: flex; justify-content: center; margin-top: 10%"><img src="qrCode.png" alt="Qr code" style="height: 500px"></div>
+            <div style="display: flex; justify-content: center; margin-top: 7%"><img src="qrCode.jpeg" alt="Qr code" style="height: 700px" onclick='window.location.href = "http://morpion/PO-2024/login.php"'></div>
         </main>
         <footer>
             <div style="background-color: #597081; height: 50px; width: 100%; position:absolute; bottom:0" class="text-center"><h2 style="color: white; margin-top: 4px">Portes-ouvertes 2024 - Ethan² - © tous droits réservés</h2></div>
