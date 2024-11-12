@@ -36,6 +36,20 @@ class Database
         $stmt->bindParam(':codeGame', $codeGame);
         $stmt->execute();
     }
+
+    public function verifyCodeGame($codeGame){
+        $stmt = $this->db->prepare("SELECT * FROM game WHERE `codeGame` = :codeGame");
+        $stmt->bindParam(":codeGame", $codeGame);
+        $stmt->execute();
+
+        if($stmt->rowCount() == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public function playerLeaveGame($userId)
     {
         $stmt = $this->db->prepare("UPDATE player SET codeGame = 0 WHERE Id_Player = :userId");
