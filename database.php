@@ -80,4 +80,17 @@ class Database
         $stmt->execute();
     }
 
+    public function verifyUsername($username){
+        $stmt = $this->db->prepare("SELECT * FROM player WHERE `name` = :username");
+        $stmt->bindParam(":username", $username);
+        $stmt->execute();
+
+        if($stmt->rowCount() >= 1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
 }
