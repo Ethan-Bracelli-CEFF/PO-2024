@@ -9,7 +9,7 @@ $playerNumber = $playerNumber["COUNT(Id_Player)"];
 if ($playerNumber > 2){
     echo "<script>alert('Cette partie a déjà commencé !');</script>";
     header('Location: hub.php');
-} else if ($playerNumber = 2){
+} else if ($playerNumber === 2){
     $db->startGameByGameCode($codeGame);
     header('Location: game.php');
 }
