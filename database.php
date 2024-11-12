@@ -22,11 +22,12 @@ class Database
         $stmt->execute();
     }
 
-    public function createGame($codeGame, $hasPlayed, $status){
-        $stmt = $this->db->prepare("INSERT INTO game (`codeGame`, `hasPlayed`, `status`) VALUES (:code, :hasPlayed, :status)");
+    public function createGame($codeGame, $hasPlayed, $status, $turn){
+        $stmt = $this->db->prepare("INSERT INTO game (`codeGame`, `hasPlayed`, `status`, `turn`) VALUES (:code, :hasPlayed, :status, :turn)");
         $stmt->bindParam(':code', $codeGame);
         $stmt->bindParam(':hasPlayed', $hasPlayed);
         $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':turn', $turn);
         $stmt->execute();
     }
 
@@ -137,5 +138,21 @@ class Database
         $stmt->bindParam(':codeGame', $codeGame, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTurnByCodeGame($codeGame)
+    {
+        $stmt = $this->db->prepare("SELECT turn FROM game WHERE codeGame = :codeGame");
+        $stmt->bindParam(':codeGame', $codeGame, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function changeTurnByCodeGame($turn, $codeGame)
+    {
+        $stmt = $this->db->prepare("UPDATE game SET `turn` = :turn WHERE `codeGame` = :codeGame");
+        $stmt->bindParam(":turn", $turn);
+        $stmt->bindParam(":codeGame", $codeGame);
+        $stmt->execute();
     }
 }

@@ -17,8 +17,9 @@
 
             $hasPlayed = false;
             $status = 0;
+            $turn = "X";
 
-            $db->createGame($_SESSION['codeGame'], $hasPlayed, $status);
+            $db->createGame($_SESSION['codeGame'], $hasPlayed, $status, $turn);
             $db->setGameCodeForPlayer($_SESSION['username'], $_SESSION['codeGame']);
             header("Location: waiting_room.php");
             exit;
