@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db->playerLeaveGame($userId);
     $playerNumber = $db->countPlayerByGameCode($codeGame);
     $playerNumber = $playerNumber["COUNT(Id_Player)"];
+    $_SESSION['codeGame'] = null;
     if ($playerNumber = 0){
-        $_SESSION['codeGame'] = null;
         $db->deleteGameByGameCode($codeGame);
     }
     header("Location: hub.php");
