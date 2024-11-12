@@ -4,6 +4,7 @@ require_once('database.php');
 $db = new Database();
 $codeGame = $_SESSION['codeGame'];
 $playerNumber = $db->countPlayerByGameCode($codeGame);
+$playerNumber = $playerNumber["COUNT(Id_Player)"];
 
 if ($playerNumber > 2){
     echo "<script>alert('Cette partie a déjà commencé !');</script>";
