@@ -73,4 +73,11 @@ class Database
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function deleteGameByGameCode($codeGame)
+    {
+        $stmt = $this->db->prepare("DELETE FROM game WHERE codeGame = :codeGame");
+        $stmt->bindParam(':codeGame', $codeGame, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
 }
