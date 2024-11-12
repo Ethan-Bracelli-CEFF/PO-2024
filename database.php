@@ -22,4 +22,27 @@ class Database
         $stmt->execute();
     }
 
+    public function playerLeaveGame($userId)
+    {
+        $stmt = $this->db->prepare("UPDATE player SET Id_Game = 0 WHERE Id_Player = :userId");
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
+    public function countPlayerByGameCode($codeGame)
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(Id_Player) FROM player WHERE code = :codeGame");
+        $stmt->bindParam(':codeGame', $codeGame, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function startGameByGameCode($codeGame)
+    {
+        $stmt = $this->db->prepare("UPDATE game SET status = 1 WHERE codeGame = :codeGame");
+        $stmt->bindParam(':codeGame', $codeGame, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
