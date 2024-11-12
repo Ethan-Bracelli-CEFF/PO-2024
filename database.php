@@ -23,7 +23,7 @@ class Database
     }
 
     public function createGame($codeGame, $hasPlayed, $status){
-        $stmt = $this->db->prepare("INSERT INTO game (`code`, `hasPlayed`, `status`) VALUES (:code, :hasPlayed, :status)");
+        $stmt = $this->db->prepare("INSERT INTO game (`codeGame`, `hasPlayed`, `status`) VALUES (:code, :hasPlayed, :status)");
         $stmt->bindParam(':code', $codeGame);
         $stmt->bindParam(':hasPlayed', $hasPlayed);
         $stmt->bindParam(':status', $status);
@@ -45,7 +45,7 @@ class Database
 
     public function countPlayerByGameCode($codeGame)
     {
-        $stmt = $this->db->prepare("SELECT COUNT(Id_Player) FROM player WHERE code = :codeGame");
+        $stmt = $this->db->prepare("SELECT COUNT(Id_Player) FROM player WHERE codeGame = :codeGame");
         $stmt->bindParam(':codeGame', $codeGame, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
