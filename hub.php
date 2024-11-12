@@ -1,3 +1,28 @@
+<?php
+    session_start();
+    require_once('database.php');
+    $db = new Database();
+
+    if(isset($_POST['createGame'])){
+        $_SESSION['codeGame'] = rand(1, 10000);
+
+        $hasPlayed = false;
+        $status = 0;
+
+        $db->createGame($_SESSION['codeGame'], $hasPlayed, $status);
+        $db->setGameCodeForPlayer($_SESSION['username'], $_SESSION['codeGame']);
+        header("Location: waiting_room.php");
+        exit;
+    }
+    else if(isset($_POST['joinGame'])){
+        $codeGame = $_POST['codeGame'];
+        
+        $db->setGameCodeForPlayer($_SESSION['username'], $codeGame);
+        header('Location: waiting_room.php');
+        exit;
+    }
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -24,11 +49,15 @@
             </div>
         </header>
         <main>
-            <button style="margin-left: 25vw; margin-top: 30vw;padding: 5px; background-color: #597081; color: white; width: 50vw; font-size: x-large" class="border-0 rounded-4">Créer une partie</button>
+            <form action="" method="post">
+                <button style="margin-left: 25vw; margin-top: 30vw;padding: 5px; background-color: #597081; color: white; width: 50vw; font-size: x-large" class="border-0 rounded-4" type="submit" name="createGame">Créer une partie</button>
+            </form>
 
             <h2 style="margin-top: 30vw;" class="text-center">Rejoindre une partie : </h2>
-            <input type="text" name="username" style="background-color: rgba(89, 112, 129, 0.5);; color: white; width: 50%; margin-left: 25%; margin-top: 5%" class="rounded-4 text-center border-0" placeholder="Code de la partie"><br>
-            <button style="width:30%; color: white; background-color: #597081; padding: 5px; margin-left: 35%; margin-top: 10vw" class="rounded-4 border-0" type="submit">Confirmer</button>
+            <form action="" method="post">
+                <input type="text" name="codeGame" style="background-color: rgba(89, 112, 129, 0.5);; color: white; width: 50%; margin-left: 25%; margin-top: 5%" class="rounded-4 text-center border-0" placeholder="Code de la partie"><br>
+                <button style="width:30%; color: white; background-color: #597081; padding: 5px; margin-left: 35%; margin-top: 10vw" class="rounded-4 border-0" type="submit" name="joinGame">Confirmer</button>
+            </form>
         </main>
         <footer>
             <div style="background-color: #597081; width: 100%; color: white; position: absolute; bottom: 0" class="text-center">

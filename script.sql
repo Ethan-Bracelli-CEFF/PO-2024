@@ -5,7 +5,7 @@ CREATE TABLE Game(
    Id_Game INT AUTO_INCREMENT,
    code INT,
    hasPlayed BOOLEAN,
-   status VARCHAR(50),
+   status VARCHAR(50), -- 0 = pas commencée, 1 = en cours, 2 = terminée
    PRIMARY KEY(Id_Game)
 );
  

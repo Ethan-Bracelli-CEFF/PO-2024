@@ -22,4 +22,18 @@ class Database
         $stmt->execute();
     }
 
+    public function createGame($codeGame, $hasPlayed, $status){
+        $stmt = $this->db->prepare("INSERT INTO game (`code`, `hasPlayed`, `status`) VALUES (:code, :hasPlayed, :status)");
+        $stmt->bindParam(':code', $codeGame);
+        $stmt->bindParam(':hasPlayed', $hasPlayed);
+        $stmt->bindParam(':status', $status);
+        $stmt->execute();
+    }
+
+    public function setGameCodeForPlayer($username, $codeGame){
+        $stmt = $this->db->prepare("UPDATE player SET `codeGame` = :codeGame WHERE `name` = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':codeGame', $codeGame);
+        $stmt->execute();
+    }
 }
