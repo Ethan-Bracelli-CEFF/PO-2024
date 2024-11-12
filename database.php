@@ -122,6 +122,7 @@ class Database
         $stmt->bindParam(":turn", $turn);
         $stmt->bindParam(":codeGame", $codeGame);
         $stmt->execute();
+    }
     public function countCellsByGameCode($codeGame)
     {
         $stmt = $this->db->prepare("SELECT COUNT(Id_Cells) FROM cells WHERE codeGame = :codeGame");
