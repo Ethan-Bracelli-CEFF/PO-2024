@@ -2,6 +2,9 @@
 session_start();
 require_once('database.php');
 $db = new Database();
+$codeGame = $_SESSION['codeGame'];
+
+$cells = $db->getCellsByCodeGame($codeGame)
 ?>
 
 <!doctype html>
@@ -50,15 +53,10 @@ $db = new Database();
     <main>
         <div class="morpion-grid-container" style="margin-top:10vh">
             <div class="morpion-grid">
-                <button id="1" class="allbtn border-0" onclick="morpion('1')"></button>
-                <button id="2" class="allbtn border-0" onclick="morpion('2')"></button>
-                <button id="3" class="allbtn border-0" onclick="morpion('3')"></button>
-                <button id="4" class="allbtn border-0" onclick="morpion('4')"></button>
-                <button id="5" class="allbtn border-0" onclick="morpion('5')"></button>
-                <button id="6" class="allbtn border-0" onclick="morpion('6')"></button>
-                <button id="7" class="allbtn border-0" onclick="morpion('7')"></button>
-                <button id="8" class="allbtn border-0" onclick="morpion('8')"></button>
-                <button id="9" class="allbtn border-0" onclick="morpion('9')"></button>
+                <?php foreach ($cells as $cell): ?>
+                    <button id="<?= $cell['number'] ?>" class="allbtn border-0" onclick="morpion(<?= $cell['number'] ?>)"><?= $cell['state'] ?></button>
+                <?php endforeach; ?>
+
             </div>
         </div>
         <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center">Au tour du joueur X</h2>
@@ -85,7 +83,9 @@ $db = new Database();
             // appel fetch, en lui passant l'id(numero de la case) --> qui remplit la base de donnée et qui appelle la page
             fetch('updateCell.php', {
                 method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
                 body: 'id=' + id + '&turn=' + turn
             });
 

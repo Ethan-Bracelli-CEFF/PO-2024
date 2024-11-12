@@ -130,4 +130,12 @@ class Database
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getCellsByCodeGame($codeGame)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM cells WHERE codeGame = :codeGame");
+        $stmt->bindParam(':codeGame', $codeGame, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
