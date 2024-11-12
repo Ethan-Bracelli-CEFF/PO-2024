@@ -138,27 +138,4 @@ class Database
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function setHasPlayed($codeGame){
-        $stmt = $this->db->prepare("UPDATE game SET `hasPlayed` = 1 WHERE `codeGame` = :codeGame");
-        $stmt->bindParam(':codeGame', $codeGame);
-        $stmt->execute();
-    }
-
-    public function verifyHasPlayedDb($codeGame){
-        $stmt = $this->db->prepare("SELECT `hasPlayed` FROM game WHERE `codeGame` = :codeGame");
-        $stmt->bindParam(':codeGame', $codeGame);
-        $stmt->execute();
-
-        // if($stmt == 1){
-        //     return true;
-        // }
-        // else{
-        //     return false;
-        // }
-    }
-
-    // public function replay($codeGame){
-    //     $stmt = $this->db->prepare("UPDATE cells SET state = null WHERE ")
-    // }
 }
