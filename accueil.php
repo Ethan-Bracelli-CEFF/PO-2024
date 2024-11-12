@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="text" name="username" style="background-color: rgba(89, 112, 129, 0.5);; color: white; width: 50%; margin-left: 25%; margin-top: 5%" class="rounded-4 text-center border-0"><br>
                     <button style="width:30%; color: white; background-color: #597081; padding: 5px; margin-left: 35%; margin-top: 25%" class="rounded-4 border-0" type="submit">Confirmer</button>
                 </form>
-            </div>
+                </div>
         </main>
         <footer>
             <div style="background-color: #597081; width: 100%; color: white; position: absolute; bottom: 0" class="text-center">
