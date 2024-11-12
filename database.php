@@ -93,7 +93,8 @@ class Database
         }
     }
 
-    public function verifyCodeGameGeneration($codeGame) {
+    public function verifyCodeGameGeneration($codeGame) 
+    {
         $stmt = $this->db->prepare("SELECT * FROM game WHERE `codeGame` = :codeGame");
         $stmt->bindParam(":codeGame", $codeGame);
         $stmt->execute();
@@ -106,11 +107,20 @@ class Database
         }
     }
 
-    public function addCell($state, $number, $codeGame){
+    public function addCell($state, $number, $codeGame)
+    {
         $stmt = $this->db->prepare("INSERT INTO cells (`state`, `number`, `codeGame`) VALUES (:state, :number, :codeGame)");
         $stmt->bindParam(":state", $state);
         $stmt->bindParam(":number", $number);
         $stmt->bindParam(":codeGame", $codeGame);
         $stmt->execute();
-        }
+    }
+
+    public function countCellsByGameCode($codeGame)
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(Id_Cells) FROM cells WHERE codeGame = :codeGame");
+        $stmt->bindParam(':codeGame', $codeGame, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
