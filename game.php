@@ -4,6 +4,18 @@ require_once('database.php');
 $db = new Database();
 $codeGame = $_SESSION['codeGame'];
 
+$delai = 0.5;
+$url = 'http://morpion/PO-2024/game.php';
+header("Refresh: $delai;url=$url");
+
+// function verifyHasPlayed($codeGame, $db)
+// {
+//     if ($db->verifyHasPlayedDb($codeGame)) {
+//         header("Location: game.php");
+//         exit;
+//     }
+// }
+
 $cells = $db->getCellsByCodeGame($codeGame)
 ?>
 
@@ -140,9 +152,8 @@ $cells = $db->getCellsByCodeGame($codeGame)
 
         function rejouer() {
             if (gagnant == true) {
-                location.reload(true);
+                fetch('replay.php?');
             }
-
         }
     </script>
 
