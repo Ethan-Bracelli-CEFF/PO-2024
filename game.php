@@ -7,17 +7,7 @@ $codeGame = $_SESSION['codeGame'];
 $cells = $db->getCellsByCodeGame($codeGame);
 $turn = $db->getTurnByCodeGame($codeGame);
 $turn = $turn['turn'];
-$delai = 0.5;
-$url = 'http://morpion/PO-2024/game.php';
-header("Refresh: $delai;url=$url");
 
-// function verifyHasPlayed($codeGame, $db)
-// {
-//     if ($db->verifyHasPlayedDb($codeGame)) {
-//         header("Location: game.php");
-//         exit;
-//     }
-// }
 
 $cells = $db->getCellsByCodeGame($codeGame)
 ?>
@@ -103,8 +93,7 @@ $cells = $db->getCellsByCodeGame($codeGame)
             const elem = document.getElementById(id);
             if (!gagnant && elem.innerHTML === "") {
                 ex++;
-                elem.innerHTML = `<h1>${turn}</h1>`;
-                // document.getElementById('tour').innerHTML = `<h2>Au tour du joueur ${turn}</h2>`;
+                elem.innerHTML = `${turn}`;
                 if (ex >= 5) {
                     gagne();
                 }
