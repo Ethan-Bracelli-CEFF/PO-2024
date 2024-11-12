@@ -1,12 +1,24 @@
 <?php
 session_start();
 require_once('database.php');
+$db = new Database();
+$codeGame = $_SESSION['codeGame'];
+$playerNumber = $db->countPlayerByGameCode($codeGame);
+
+if ($playerNumber > 2){
+    echo "<script>alert('Cette partie a déjà commencé !');</script>";
+    header('Location: hub.php');
+} else if ($playerNumber = 2){
+    $db->startGameByGameCode($codeGame);
+    header('Location: game.php');
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
+    
 
-    $db = new Database();
-    $db->createUser($username);
+    $db->playerLeaveGame($userId);
+    $_SESSION['codeGame'] = null;
     header("Location: hub.php");
     exit;
 }
@@ -16,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 
 <head>
-    <title>UMBUSE 2K24</title>
+    <title>UMBUSE 2K24 - Waiting Room</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -41,8 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container" style="margin-top: 20vh;">
             <h1 class="text-center" style="font-size: 4em">En attente</h1>
             <h2 class="text-center" style="margin-top:15%">Cette parti à besoin d'un deuxième joueur pour être commencée</h2>
-            <h3 class="text-center" style="margin-top:20%">Code de la game : <? $code ?></h3>
+            <h3 class="text-center" style="margin-top:20%">Code de la game : <? $codeGame ?></h3>
+            <form action="" method="POST">
             <button style="width:30%; color: white; background-color: #597081; padding: 5px; margin-left: 35%; margin-top: 25%" class="rounded-4 border-0" type="submit">Quitter</button>
+            </form>
         </div>
     </main>
     <footer>
