@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 
     <head>
-        <title>UMBUSE 2K24</title>
+        <title>UMBUSE 2K24 - Accueil</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
