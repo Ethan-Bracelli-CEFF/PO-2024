@@ -4,7 +4,9 @@ require_once('database.php');
 $db = new Database();
 $codeGame = $_SESSION['codeGame'];
 
-$cells = $db->getCellsByCodeGame($codeGame)
+$cells = $db->getCellsByCodeGame($codeGame);
+$turn = $db->getTurnByCodeGame($codeGame);
+$turn = $turn['turn'];
 ?>
 
 <!doctype html>
@@ -59,9 +61,10 @@ $cells = $db->getCellsByCodeGame($codeGame)
 
             </div>
         </div>
-        <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center">Au tour du joueur X</h2>
+        <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center">Au tour du joueur <?= $turn ?></h2>
         <button onclick="rejouer()" class="rounded-4 border-0" style="color: white; background-color: #597081; padding: 5px; margin-top: 5vh; width: 30%; margin-left: 35%">Rejouer</button>
     </main>
+    <input type="hidden" name="turn" id="turn" value="<?= htmlspecialchars($turn) ?>">
     <footer>
         <div style="background-color: #597081; width: 100%; color: white; position: absolute; bottom: 0" class="text-center">
             <p style="margin-top: 5px; padding-top: 5px">Portes-ouvertes 2024 - Ethan²</p>
@@ -69,17 +72,12 @@ $cells = $db->getCellsByCodeGame($codeGame)
     </footer>
 
     <script>
-        let joueur = 1;
         let gagnant = false;
         let ex = 0;
-        let turn = "O";
+        let turn = document.getElementById("turn").value;
 
         async function morpion(id) {
-            if (turn == "O") {
-                turn = "X";
-            } else if (turn == "X") {
-                turn = "O";
-            }
+            turn = document.getElementById("turn").value;
             // appel fetch, en lui passant l'id(numero de la case) --> qui remplit la base de donnée et qui appelle la page
             fetch('updateCell.php', {
                 method: 'POST',
@@ -92,9 +90,8 @@ $cells = $db->getCellsByCodeGame($codeGame)
             const elem = document.getElementById(id);
             if (!gagnant && elem.innerHTML === "") {
                 ex++;
-                elem.innerHTML = joueur === 1 ? `<h1>X</h1>` : `<h1>O</h1>`;
-                document.getElementById('tour').innerHTML = `<h2>Au tour du joueur ${joueur === 1 ? 'O' : 'X'}</h2>`;
-                joueur = 1 - joueur;
+                elem.innerHTML = `<h1>${turn}</h1>`;
+                // document.getElementById('tour').innerHTML = `<h2>Au tour du joueur ${turn}</h2>`;
                 if (ex >= 5) {
                     gagne();
                 }
