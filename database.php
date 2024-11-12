@@ -105,4 +105,12 @@ class Database
             return true;
         }
     }
+
+    public function addCell($state, $number, $codeGame){
+        $stmt = $this->db->prepare("INSERT INTO cells (`state`, `number`, `codeGame`) VALUES (:state, :number, :codeGame)");
+        $stmt->bindParam(":state", $state);
+        $stmt->bindParam(":number", $number);
+        $stmt->bindParam(":codeGame", $codeGame);
+        $stmt->execute();
+        }
 }

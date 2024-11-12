@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    require_once('database.php');
+    $db = new Database();
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -62,6 +68,7 @@
             let ex = 0;
 
             function morpion(id) {
+                // appel fetch, en lui passant l'id(numero de la case) --> qui remplit la base de donnée et qui appelle la page
                 const elem = document.getElementById(id);
                 if (!gagnant && elem.innerHTML === "") {
                     ex++;

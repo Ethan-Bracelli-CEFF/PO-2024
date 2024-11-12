@@ -10,6 +10,12 @@ if ($playerNumber > 2){
     echo "<script>alert('Cette partie a déjà commencé !');</script>";
     header('Location: hub.php');
 } else if ($playerNumber === 2){
+    for ($i = 1; $i < 10; $i++){
+        $state = ""; // vide
+        $number = $i;
+        $codeGame = $_SESSION['codeGame'];
+        $db->addCell($state, $number, $codeGame);
+    }
     $db->startGameByGameCode($codeGame);
     header('Location: game.php');
 }

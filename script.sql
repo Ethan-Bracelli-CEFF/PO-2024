@@ -11,7 +11,7 @@ CREATE TABLE Game(
  
 CREATE TABLE Cells(
    Id_Cells INT AUTO_INCREMENT,
-   state VARCHAR(50),
+   state VARCHAR(50), -- vide, x, o
    number INT,
    codeGame INT NOT NULL,
    PRIMARY KEY(Id_Cells),
