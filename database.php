@@ -24,7 +24,7 @@ class Database
 
     public function playerLeaveGame($userId)
     {
-        $stmt = $this->db->prepare("UPDATE player SET Id_Game = 0 WHERE Id_Player = :userId");
+        $stmt = $this->db->prepare("UPDATE player SET codeGame = 0 WHERE Id_Player = :userId");
         $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
         $stmt->execute();
     }
