@@ -6,6 +6,7 @@ CREATE TABLE Game(
    codeGame INT,
    hasPlayed BOOLEAN,
    status VARCHAR(50), -- 0 = pas commencée, 1 = en cours, 2 = terminée
+   turn VARCHAR(50),
    PRIMARY KEY(Id_Game)
 );
  
