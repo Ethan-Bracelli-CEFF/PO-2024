@@ -19,7 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
 
     $db->playerLeaveGame($userId);
-    $_SESSION['codeGame'] = null;
+    $playerNumber = $db->countPlayerByGameCode($codeGame);
+    $playerNumber = $playerNumber["COUNT(Id_Player)"];
+    if ($playerNumber = 0){
+        $_SESSION['codeGame'] = null;
+        $db->deleteGameByGameCode($codeGame);
+    }
     header("Location: hub.php");
     exit;
 }
@@ -54,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container" style="margin-top: 20vh;">
             <h1 class="text-center" style="font-size: 4em">En attente</h1>
             <h2 class="text-center" style="margin-top:15%">Cette parti à besoin d'un deuxième joueur pour être commencée</h2>
-            <h3 class="text-center" style="margin-top:20%">Code de la game : <? $codeGame ?></h3>
+            <h3 class="text-center" style="margin-top:20%">Code de la game : <?php echo($codeGame) ?></h3>
             <form action="" method="POST">
             <button style="width:30%; color: white; background-color: #597081; padding: 5px; margin-left: 35%; margin-top: 25%" class="rounded-4 border-0" type="submit">Quitter</button>
             </form>
