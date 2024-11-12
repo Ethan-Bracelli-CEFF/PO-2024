@@ -2,10 +2,10 @@
 session_start();
 require_once('database.php');
 $db = new Database();
+$_SESSION['errorLogin'] = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
-    $_SESSION['errorLogin'] = "";
 
     if($db->verifyUsername($username)){
         $_SESSION['username'] = $username;
