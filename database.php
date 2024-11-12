@@ -37,7 +37,7 @@ class Database
         $stmt->execute();
     }
 
-    public function verifyCodeGame($codeGame){
+    public function verifyCodeGameUser($codeGame){
         $stmt = $this->db->prepare("SELECT * FROM game WHERE `codeGame` = :codeGame");
         $stmt->bindParam(":codeGame", $codeGame);
         $stmt->execute();
@@ -93,4 +93,16 @@ class Database
         }
     }
 
+    public function verifyCodeGameGeneration($codeGame) {
+        $stmt = $this->db->prepare("SELECT * FROM game WHERE `codeGame` = :codeGame");
+        $stmt->bindParam(":codeGame", $codeGame);
+        $stmt->execute();
+
+        if($stmt->rowCount() >= 1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 }

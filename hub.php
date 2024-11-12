@@ -6,20 +6,30 @@
     $_SESSION['errorMessage'] = "";
 
     if(isset($_POST['createGame'])){
-        $_SESSION['codeGame'] = rand(1, 10000);
+        function generationNumber($db){
+            $codeGame= rand(10000, 100000);
+            if($db->verifyCodeGameGeneration($codeGame)){
+                $_SESSION['codeGame'] = $codeGame;
+            }
+            else{
+                generationNumber($db);
+            }
 
-        $hasPlayed = false;
-        $status = 0;
+            $hasPlayed = false;
+            $status = 0;
 
-        $db->createGame($_SESSION['codeGame'], $hasPlayed, $status);
-        $db->setGameCodeForPlayer($_SESSION['username'], $_SESSION['codeGame']);
-        header("Location: waiting_room.php");
-        exit;
+            $db->createGame($_SESSION['codeGame'], $hasPlayed, $status);
+            $db->setGameCodeForPlayer($_SESSION['username'], $_SESSION['codeGame']);
+            header("Location: waiting_room.php");
+            exit;
+        }
+
+        generationNumber($db);
     }
     else if(isset($_POST['joinGame'])){
         $codeGame = $_POST['codeGame'];
 
-        if($db->verifyCodeGame($codeGame)){
+        if($db->verifyCodeGameUser($codeGame)){
             $db->setGameCodeForPlayer($_SESSION['username'], $codeGame);
             $_SESSION['codeGame'] = $codeGame;
             header('Location: waiting_room.php');
