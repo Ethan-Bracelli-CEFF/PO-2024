@@ -5,6 +5,7 @@ require_once('database.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
 
+    $_SESSION['user'] = $username;
     $db = new Database();
     $db->createUser($username);
     header("Location: hub.php");
