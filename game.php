@@ -66,9 +66,17 @@
             let joueur = 1;
             let gagnant = false;
             let ex = 0;
+            let turn = "O";
 
             function morpion(id) {
+                if(turn == "O"){
+                    turn = "X";
+                }
+                else if(turn == "X"){
+                    turn = "O";
+                }                
                 // appel fetch, en lui passant l'id(numero de la case) --> qui remplit la base de donnée et qui appelle la page
+                fetch('updateCell.php?id=' + id + '&turn=' + turn);
                 const elem = document.getElementById(id);
                 if (!gagnant && elem.innerHTML === "") {
                     ex++;

@@ -112,5 +112,13 @@ class Database
         $stmt->bindParam(":number", $number);
         $stmt->bindParam(":codeGame", $codeGame);
         $stmt->execute();
-        }
+    }
+
+    public function updateCell($number, $turn, $codeGame){
+        $stmt = $this->db->prepare("UPDATE cells SET `state` = :turn WHERE `codeGame` = :codeGame AND `number` = :number");
+        $stmt->bindParam(":number", $number);
+        $stmt->bindParam(":turn", $turn);
+        $stmt->bindParam(":codeGame", $codeGame);
+        $stmt->execute();
+    }
 }
