@@ -21,6 +21,7 @@
 
         if($db->verifyCodeGame($codeGame)){
             $db->setGameCodeForPlayer($_SESSION['username'], $codeGame);
+            $_SESSION['codeGame'] = $codeGame;
             header('Location: waiting_room.php');
             exit;
         }
@@ -65,7 +66,7 @@
                 <input type="text" name="codeGame" style="background-color: rgba(89, 112, 129, 0.5);; color: white; width: 50%; margin-left: 25%; margin-top: 5%" class="rounded-4 text-center border-0" placeholder="Code de la partie"><br>
                 <button style="width:30%; color: white; background-color: #597081; padding: 5px; margin-left: 35%; margin-top: 10vw" class="rounded-4 border-0" type="submit" name="joinGame">Confirmer</button>
             </form>
-            <h4 style="color: red;"><?= $_SESSION['errorMessage'] ?></h4>
+            <h4 style="color: red; margin-top: 10vw" class="text-center"><?= $_SESSION['errorMessage'] ?></h4>
         </main>
         <footer>
             <div style="background-color: #597081; width: 100%; color: white; position: absolute; bottom: 0" class="text-center">
