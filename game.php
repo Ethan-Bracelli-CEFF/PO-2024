@@ -7,6 +7,19 @@ $codeGame = $_SESSION['codeGame'];
 $cells = $db->getCellsByCodeGame($codeGame);
 $turn = $db->getTurnByCodeGame($codeGame);
 $turn = $turn['turn'];
+$delai = 0.5;
+$url = 'http://morpion/PO-2024/game.php';
+header("Refresh: $delai;url=$url");
+
+// function verifyHasPlayed($codeGame, $db)
+// {
+//     if ($db->verifyHasPlayedDb($codeGame)) {
+//         header("Location: game.php");
+//         exit;
+//     }
+// }
+
+$cells = $db->getCellsByCodeGame($codeGame)
 ?>
 
 <!doctype html>
@@ -137,9 +150,8 @@ $turn = $turn['turn'];
 
         function rejouer() {
             if (gagnant == true) {
-                location.reload(true);
+                fetch('replay.php?');
             }
-
         }
     </script>
 
