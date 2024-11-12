@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once('db.php');
-$db = new Database;
+require_once('database.php');
+$db = new Database();
 
-$number = $_GET['id'];
-$turn = $_GET['turn'];
+$number = $_POST['id'];
+$turn = $_POST['turn'];
 $codeGame = $_SESSION['codeGame'];
 $db->updateCell($number, $turn, $codeGame);
