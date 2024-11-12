@@ -3,6 +3,8 @@ USE `po-2024`;
 
 CREATE TABLE Game(
    Id_Game INT AUTO_INCREMENT,
+   code INT,
+   hasPlayer BOOLEAN,
    status VARCHAR(50),
    PRIMARY KEY(Id_Game)
 );
