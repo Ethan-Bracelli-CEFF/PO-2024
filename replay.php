@@ -4,4 +4,7 @@ require_once('database.php');
 $db = new Database();
 
 $codeGame = $_SESSION['codeGame'];
-// $db->replay($codeGame);
+$db->replay($codeGame);
+
+header("Location: game.php");
+exit();

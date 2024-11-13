@@ -155,4 +155,10 @@ class Database
         $stmt->bindParam(":codeGame", $codeGame);
         $stmt->execute();
     }
+
+    public function replay($codeGame){
+        $stmt = $this->db->prepare("UPDATE cells SET `state` = '' WHERE `codeGame` = :codeGame");
+        $stmt->bindParam(":codeGame", $codeGame);
+        $stmt->execute();
+    }
 }

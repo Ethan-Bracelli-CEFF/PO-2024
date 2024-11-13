@@ -47,12 +47,6 @@ $cells = $db->getCellsByCodeGame($codeGame)
             font-size: 2rem;
         }
     </style>
-    <script>
-        // Fonction qui actualise la page toutes les secondes
-        setInterval(function(){
-            location.reload();
-        }, 1000); // 1000 millisecondes = 1 seconde
-    </script>
 </head>
 
 <body>
@@ -144,37 +138,8 @@ $cells = $db->getCellsByCodeGame($codeGame)
         }
 
         function rejouer() {
-            if (gagnant == true) {
-                fetch('replay.php?');
-            }
+            fetch('replay.php?');
         }
-
-        async function checkForUpdates() {
-            try {
-                const response = await fetch('checkUpdate.php');
-                const data = await response.json();
-
-                // Mettre à jour les cellules si elles ont changé
-                data.cells.forEach(cell => {
-                    const cellElement = document.getElementById(cell['number']);
-                    if (cellElement.innerHTML !== cell['state']) {
-                        cellElement.innerHTML = cell['state'];
-                    }
-                });
-
-                // Mettre à jour le tour
-                document.getElementById("tour").innerHTML = `Au tour du joueur ${data.turn}`;
-            } catch (error) {
-                console.error("Erreur lors de la vérification des mises à jour :", error);
-            }
-            // Répète la requête toutes les 2 secondes
-            setTimeout(checkForUpdates, 2000);
-        }
-
-        // Appelle la fonction dès que la page est chargée
-        document.addEventListener('DOMContentLoaded', () => {
-            checkForUpdates();
-        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
