@@ -12,7 +12,6 @@
 - PHP
 - SQL
 - Bootstrap
-- Cloud Infomaniak -->[ça](https://www.infomaniak.com/fr/hebergement/serveur-cloud-manage)
 ## 🔎 Précisions
 - Nous n'avions que 3 jours.
 - Nous n'avions plus fait de web depuis un mois.
