@@ -3,13 +3,62 @@ session_start();
 require_once('database.php');
 $db = new Database();
 $codeGame = $_SESSION['codeGame'];
+$_SESSION['win'] = false;
 
 $cells = $db->getCellsByCodeGame($codeGame);
 $turn = $db->getTurnByCodeGame($codeGame);
 $turn = $turn['turn'];
 
 
-$cells = $db->getCellsByCodeGame($codeGame)
+$cells = $db->getCellsByCodeGame($codeGame);
+?>
+
+<?php // verification du gagnant
+    $cells = $db->getCellsByCodeGame($codeGame);
+
+    $ListCell = [];
+    foreach ($cells as $index => $cell) {
+        $ListCell["cell" . ($index + 1)] = [
+            "nombre" => $cell['number'],
+            "state" => $cell['state']
+        ];
+    }
+
+    $winCombinations = [
+        ["1", "2", "3"],
+        ["4", "5", "6"],
+        ["7", "8", "9"],
+        ["1", "4", "7"],
+        ["2", "5", "8"],
+        ["3", "6", "9"],
+        ["1", "5", "9"],
+        ["3", "5", "7"]
+    ];
+
+    foreach ($winCombinations as $comb) {
+        $xCount = 0;
+        $oCount = 0;
+
+        foreach ($comb as $cellIndex) {
+            if ($ListCell["cell" . $cellIndex]['state'] == "X") {
+                $xCount++;
+            }
+            else if ($ListCell["cell" . $cellIndex]['state'] == "O"){
+                $oCount++;
+            }
+
+            if ($xCount == 3) {
+                $_SESSION['win'] = "X";
+                header('Location: accueil.php'); // temporaire
+                exit();
+            }
+            else if($oCount == 3){
+                $_SESSION['win'] = "O";
+                header('Location: accueil.php'); // temporaire
+                exit();
+            }
+        }
+    }
 ?>
 
 <!doctype html>
@@ -87,7 +136,6 @@ $cells = $db->getCellsByCodeGame($codeGame)
 
         async function morpion(id) {
             turn = document.getElementById("turn").value;
-            // appel fetch, en lui passant l'id(numero de la case) --> qui remplit la base de donnée et qui appelle la page
             fetch('updateCell.php', {
                 method: 'POST',
                 headers: {
@@ -106,38 +154,6 @@ $cells = $db->getCellsByCodeGame($codeGame)
             }
         }
 
-        function gagne() {
-            const winCombinations = [
-                ["1", "2", "3"],
-                ["4", "5", "6"],
-                ["7", "8", "9"],
-                ["1", "4", "7"],
-                ["2", "5", "8"],
-                ["3", "6", "9"],
-                ["1", "5", "9"],
-                ["3", "5", "7"]
-            ];
-
-            winCombinations.some(combination => {
-                const [a, b, c] = combination.map(id => document.getElementById(id).innerHTML);
-                if (a && a === b && b === c) {
-                    document.getElementById('tour').innerHTML = `<h2>Le joueur ${a.includes('X') ? 'X' : 'O'} a gagné</h2>`;
-                    gagnant = true;
-                    disableAllButtons();
-                    return true;
-                }
-            });
-
-            if (ex === 9 && !gagnant) {
-                exaequo();
-            }
-        }
-
-        function disableAllButtons() {
-            for (let i = 1; i <= 9; i++) {
-                document.getElementById(i.toString()).disabled = true;
-            }
-        }
 
         function exaequo() {
             document.getElementById('tour').innerHTML = `<h2>EX AEQUO</h2>`;
@@ -152,3 +168,4 @@ $cells = $db->getCellsByCodeGame($codeGame)
 </body>
 
 </html>
+
