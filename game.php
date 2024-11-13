@@ -38,12 +38,22 @@ $cells = $db->getCellsByCodeGame($codeGame);
     foreach ($winCombinations as $comb) {
         $xCount = 0;
         $oCount = 0;
+        $fullCount = 0;
+
+        for($i = 1; $i < 10; $i++) {
+            if ($ListCell["cell" . $i]['state'] == "X") {
+                $fullCount++;
+            }
+            if ($ListCell["cell" . $i]['state'] == "O") {
+                $fullCount++;
+            }
+        }
+
 
         foreach ($comb as $cellIndex) {
             if ($ListCell["cell" . $cellIndex]['state'] == "X") {
                 $xCount++;
-            }
-            else if ($ListCell["cell" . $cellIndex]['state'] == "O"){
+            } else if ($ListCell["cell" . $cellIndex]['state'] == "O") {
                 $oCount++;
             }
 
@@ -51,10 +61,13 @@ $cells = $db->getCellsByCodeGame($codeGame);
                 $_SESSION['win'] = "X";
                 header('Location: accueil.php'); // temporaire
                 exit();
-            }
-            else if($oCount == 3){
+            } else if ($oCount == 3) {
                 $_SESSION['win'] = "O";
                 header('Location: accueil.php'); // temporaire
+                exit();
+            } else if ($fullCount == 9) {
+                $_SESSION['win'] = "ex aequo";
+                header("Location: host.php");
                 exit();
             }
         }
@@ -168,4 +181,3 @@ $cells = $db->getCellsByCodeGame($codeGame);
 </body>
 
 </html>
-
