@@ -169,7 +169,7 @@ $cells = $db->getCellsByCodeGame($codeGame);
 
 
         function exaequo() {
-            document.getElementById('tour').innerHTML = `<h2>EX AEQUO</h2>`;
+            document.getElementById('tour').innerHTML = `<h2>Egalité</h2>`;
         }
 
         function rejouer() {
