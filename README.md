@@ -12,11 +12,6 @@
 - PHP
 - SQL
 - Bootstrap
-## 🔎 Précisions
-- Nous n'avions que 3 jours.
-- Nous n'avions plus fait de web depuis un mois.
-- Chacun a travaillé autant sur le front-end que sur le back-end.
-- c'est notre premier projet à plusieur sur le même repo Github
 ## ✒ Auteurs : Ethan²
 - [Ethan Hofstetter](https://github.com/cp-23eth)
 - [Ethan Bracelli](https://github.com/Ethan-Bracelli-CEFF)
