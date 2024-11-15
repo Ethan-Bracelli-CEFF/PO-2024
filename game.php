@@ -107,6 +107,7 @@ $cells = $db->getCellsByCodeGame($codeGame);
             border-radius: 30%;
             color: white;
             font-size: 2rem;
+            
         }
     </style>
     <script>
