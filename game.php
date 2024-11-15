@@ -28,6 +28,8 @@ $cells = $db->getCellsByCodeGame($codeGame);
 <?php // verification du gagnant
 $cells = $db->getCellsByCodeGame($codeGame);
 
+$isGameEnded = false;
+
 $ListCell = [];
 foreach ($cells as $index => $cell) {
     $ListCell[$index + 1] = [
@@ -70,7 +72,7 @@ foreach ($winCombinations as $comb) {
         }
     }
 
-    $isGameEnded = false;
+
     
     if ($xCount == 3) {
         $isGameEnded = true;
