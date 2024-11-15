@@ -129,6 +129,14 @@ foreach ($winCombinations as $comb) {
 
         button.disable {
             background-color: gray;
+            padding: 10px;
+            aspect-ratio: 1;
+            width: 100%;
+            border-radius: 30%;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
     </style>
     <script>
@@ -151,7 +159,7 @@ foreach ($winCombinations as $comb) {
                 <?php foreach ($cells as $cell): ?>
                     <button
                         id="<?= $cell['number'] ?>"
-                        class="allbtn border-0"
+                        class="<?= !$isPlaying ? 'disable' : 'allbtn' ?> border-0"
                         onclick="morpion(<?= $cell['number'] ?>)"
                         <?= !$isPlaying ? 'disabled' : '' ?>>
                         <?= $cell['state'] ?>
