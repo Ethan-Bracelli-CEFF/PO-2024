@@ -69,18 +69,17 @@ foreach ($winCombinations as $comb) {
             $oCount++;
         }
 
+        $isGameEnded = false;
+        
         if ($xCount == 3) {
-            $_SESSION['win'] = "X";
-            header('Location: accueil.php'); // temporaire
-            exit();
+            $_SESSION['win'] = "Le joueur X a gagné";
+            $isGameEnded = true;
         } else if ($oCount == 3) {
-            $_SESSION['win'] = "O";
-            header('Location: accueil.php'); // temporaire
-            exit();
+            $_SESSION['win'] = "Le joueur O a gagné";
+            $isGameEnded = true;
         } else if ($fullCount == 9) {
-            $_SESSION['win'] = "ex aequo";
-            header("Location: host.php");
-            exit();
+            $_SESSION['win'] = "Egalité";
+            $isGameEnded = true;
         }
     }
 }
@@ -117,6 +116,7 @@ foreach ($winCombinations as $comb) {
             aspect-ratio: 1;
             width: 100%;
             border-radius: 30%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             color: white;
             font-size: 2rem;
             cursor: pointer;
@@ -133,6 +133,7 @@ foreach ($winCombinations as $comb) {
             aspect-ratio: 1;
             width: 100%;
             border-radius: 30%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             color: white;
             font-size: 2rem;
             cursor: pointer;
@@ -159,17 +160,24 @@ foreach ($winCombinations as $comb) {
                 <?php foreach ($cells as $cell): ?>
                     <button
                         id="<?= $cell['number'] ?>"
-                        class="<?= !$isPlaying ? 'disable' : 'allbtn' ?> border-0"
+                        class="<?= !$isPlaying || $isGameEnded ? 'disable' : 'allbtn' ?> border-0"
                         onclick="morpion(<?= $cell['number'] ?>)"
-                        <?= !$isPlaying ? 'disabled' : '' ?>>
+                        <?= !$isPlaying || $isGameEnded ? 'disabled' : '' ?>>
                         <?= $cell['state'] ?>
                     </button>
                 <?php endforeach; ?>
 
             </div>
         </div>
-        <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center">Au tour du joueur <?= $playerPlaying ?></h2>
-        <button onclick="rejouer()" class="rounded-4 border-0" style="color: white; background-color: #597081; padding: 5px; margin-top: 5vh; width: 30%; margin-left: 35%">Rejouer</button>
+        <?php if ($isGameEnded == false){?>
+            <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center">Au tour du joueur <?= $playerPlaying ?></h2>
+        <?php } else {?>
+            <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center"><?= $_SESSION['win'] ?></h2> 
+        <?php } ?>
+
+        <?php if ($isGameEnded) { ?>
+            <button onclick="rejouer()" class="rounded-4 border-0" style="color: white; background-color: #597081; padding: 5px; margin-top: 5vh; width: 30%; margin-left: 35%">Rejouer</button>
+        <?php } ?>
     </main>
     <input type="hidden" name="turn" id="turn" value="<?= htmlspecialchars($turn) ?>">
     <footer>
