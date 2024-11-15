@@ -23,6 +23,7 @@ CREATE TABLE Player(
    Id_Player INT AUTO_INCREMENT,
    name VARCHAR(50),
    codeGame INT NOT NULL,
+   turn VARCHAR(50),
    PRIMARY KEY(Id_Player),
    FOREIGN KEY(codeGame) REFERENCES Game(codeGame)
 );

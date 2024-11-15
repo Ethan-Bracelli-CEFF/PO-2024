@@ -163,4 +163,28 @@ class Database
 
         $this->changeTurnByCodeGame("X", $codeGame);
     }
+
+    public function setPlayerTurn($turn, $username)
+    {
+        $stmt = $this->db->prepare("UPDATE player SET `turn` = :turn WHERE `name` = :username");
+        $stmt->bindParam(":turn", $turn);
+        $stmt->bindParam(":username", $username);
+        $stmt->execute();
+    }
+
+    public function getTurnByPlayer($username)
+    {
+        $stmt = $this->db->prepare("SELECT `turn` from `player` WHERE `name` = :username");
+        $stmt->bindParam(":username", $username);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getPlayerPlayingByCodeGame($codeGame, $turn){
+        $stmt = $this->db->prepare("SELECT `name` from `player` WHERE `codeGame` = :codeGame AND `turn` = :turn");
+        $stmt->bindParam(":codeGame", $codeGame);
+        $stmt->bindParam(":turn", $turn);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

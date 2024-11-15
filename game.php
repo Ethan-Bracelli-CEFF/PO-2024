@@ -8,70 +8,82 @@ $_SESSION['win'] = false;
 $cells = $db->getCellsByCodeGame($codeGame);
 $turn = $db->getTurnByCodeGame($codeGame);
 $turn = $turn['turn'];
+$playerTurn = $db->getTurnByPlayer($_SESSION['username']);
+$playerTurn = $playerTurn['turn'];
 
+$playerPlaying = $db->getPlayerPlayingByCodeGame($codeGame, $turn);
+$playerPlaying = $playerPlaying['name'];
+
+$isPlaying = null;
+
+if ($playerTurn === $turn) {
+    $isPlaying = true;
+} else {
+    $isPlaying = false;
+}
 
 $cells = $db->getCellsByCodeGame($codeGame);
 ?>
 
 <?php // verification du gagnant
-    $cells = $db->getCellsByCodeGame($codeGame);
+$cells = $db->getCellsByCodeGame($codeGame);
 
-    $ListCell = [];
-    foreach ($cells as $index => $cell) {
-        $ListCell["cell" . ($index + 1)] = [
-            "nombre" => $cell['number'],
-            "state" => $cell['state']
-        ];
-    }
-
-    $winCombinations = [
-        ["1", "2", "3"],
-        ["4", "5", "6"],
-        ["7", "8", "9"],
-        ["1", "4", "7"],
-        ["2", "5", "8"],
-        ["3", "6", "9"],
-        ["1", "5", "9"],
-        ["3", "5", "7"]
+$ListCell = [];
+foreach ($cells as $index => $cell) {
+    $ListCell["cell" . ($index + 1)] = [
+        "nombre" => $cell['number'],
+        "state" => $cell['state']
     ];
+}
 
-    foreach ($winCombinations as $comb) {
-        $xCount = 0;
-        $oCount = 0;
-        $fullCount = 0;
+$winCombinations = [
+    ["1", "2", "3"],
+    ["4", "5", "6"],
+    ["7", "8", "9"],
+    ["1", "4", "7"],
+    ["2", "5", "8"],
+    ["3", "6", "9"],
+    ["1", "5", "9"],
+    ["3", "5", "7"]
+];
 
-        for($i = 1; $i < 10; $i++) {
-            if ($ListCell["cell" . $i]['state'] == "X") {
-                $fullCount++;
-            }
-            if ($ListCell["cell" . $i]['state'] == "O") {
-                $fullCount++;
-            }
+foreach ($winCombinations as $comb) {
+    $xCount = 0;
+    $oCount = 0;
+    $fullCount = 0;
+
+    for ($i = 1; $i < 10; $i++) {
+        if ($ListCell["cell" . $i]['state'] == "X") {
+            $fullCount++;
         }
-
-
-        foreach ($comb as $cellIndex) {
-            if ($ListCell["cell" . $cellIndex]['state'] == "X") {
-                $xCount++;
-            } else if ($ListCell["cell" . $cellIndex]['state'] == "O") {
-                $oCount++;
-            }
-
-            if ($xCount == 3) {
-                $_SESSION['win'] = "X";
-                header('Location: accueil.php'); // temporaire
-                exit();
-            } else if ($oCount == 3) {
-                $_SESSION['win'] = "O";
-                header('Location: accueil.php'); // temporaire
-                exit();
-            } else if ($fullCount == 9) {
-                $_SESSION['win'] = "ex aequo";
-                header("Location: host.php");
-                exit();
-            }
+        if ($ListCell["cell" . $i]['state'] == "O") {
+            $fullCount++;
         }
     }
+
+
+    foreach ($comb as $cellIndex) {
+        if ($ListCell["cell" . $cellIndex]['state'] == "X") {
+            $xCount++;
+        } else if ($ListCell["cell" . $cellIndex]['state'] == "O") {
+            $oCount++;
+        }
+
+        if ($xCount == 3) {
+            $_SESSION['win'] = "X";
+            header('Location: accueil.php'); // temporaire
+            exit();
+        } else if ($oCount == 3) {
+            $_SESSION['win'] = "O";
+            header('Location: accueil.php'); // temporaire
+            exit();
+        } else if ($fullCount == 9) {
+            $_SESSION['win'] = "ex aequo";
+            header("Location: host.php");
+            exit();
+        }
+    }
+}
 ?>
 
 <!doctype html>
@@ -128,12 +140,18 @@ $cells = $db->getCellsByCodeGame($codeGame);
         <div class="morpion-grid-container" style="margin-top:10vh">
             <div class="morpion-grid">
                 <?php foreach ($cells as $cell): ?>
-                    <button id="<?= $cell['number'] ?>" class="allbtn border-0" onclick="morpion(<?= $cell['number'] ?>)"><?= $cell['state'] ?></button>
+                    <button
+                        id="<?= $cell['number'] ?>"
+                        class="allbtn border-0"
+                        onclick="morpion(<?= $cell['number'] ?>)"
+                        <?= !$isPlaying ? 'disabled' : '' ?>>
+                        <?= $cell['state'] ?>
+                    </button>
                 <?php endforeach; ?>
 
             </div>
         </div>
-        <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center">Au tour du joueur <?= $turn ?></h2>
+        <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center">Au tour du joueur <?= $playerPlaying ?></h2>
         <button onclick="rejouer()" class="rounded-4 border-0" style="color: white; background-color: #597081; padding: 5px; margin-top: 5vh; width: 30%; margin-left: 35%">Rejouer</button>
     </main>
     <input type="hidden" name="turn" id="turn" value="<?= htmlspecialchars($turn) ?>">
@@ -170,7 +188,7 @@ $cells = $db->getCellsByCodeGame($codeGame);
 
 
         function exaequo() {
-            document.getElementById('tour').innerHTML = `<h2>EX AEQUO</h2>`;
+            document.getElementById('tour').innerHTML = `<h2>Egalité</h2>`;
         }
 
         function rejouer() {
