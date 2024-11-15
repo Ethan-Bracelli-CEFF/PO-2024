@@ -7,7 +7,7 @@
 
     if(isset($_POST['createGame'])){
         function generationNumber($db){
-            $codeGame= rand(10000, 100000);
+            $codeGame = rand(10000, 100000);
             if($db->verifyCodeGameGeneration($codeGame)){
                 $_SESSION['codeGame'] = $codeGame;
             }
@@ -19,8 +19,9 @@
             $status = 0;
             $turn = "X";
 
-            $db->createGame($_SESSION['codeGame'], $hasPlayed, $status, $turn);
+            $db->createGame($codeGame, $hasPlayed, $status, $turn);
             $db->setGameCodeForPlayer($_SESSION['username'], $_SESSION['codeGame']);
+            $db->setPlayerturn("X", $_SESSION['username']);
             header("Location: waiting_room.php");
             exit;
         }
@@ -32,6 +33,7 @@
 
         if($db->verifyCodeGameUser($codeGame)){
             $db->setGameCodeForPlayer($_SESSION['username'], $codeGame);
+            $db->setPlayerturn("O", $_SESSION['username']);
             $_SESSION['codeGame'] = $codeGame;
             header('Location: waiting_room.php');
             exit;
