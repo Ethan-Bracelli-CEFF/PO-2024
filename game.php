@@ -119,7 +119,16 @@ foreach ($winCombinations as $comb) {
             border-radius: 30%;
             color: white;
             font-size: 2rem;
-            
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button.allbtn:hover{
+            background-color: rgba(89, 112, 129, 0.548);
+        }
+
+        button.disable {
+            background-color: gray;
         }
     </style>
     <script>
