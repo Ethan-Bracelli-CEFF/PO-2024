@@ -30,7 +30,7 @@ $cells = $db->getCellsByCodeGame($codeGame);
 
 $ListCell = [];
 foreach ($cells as $index => $cell) {
-    $ListCell["cell" . ($index + 1)] = [
+    $ListCell[$index + 1] = [
         "nombre" => $cell['number'],
         "state" => $cell['state']
     ];
@@ -53,34 +53,34 @@ foreach ($winCombinations as $comb) {
     $fullCount = 0;
 
     for ($i = 1; $i < 10; $i++) {
-        if ($ListCell["cell" . $i]['state'] == "X") {
+        if ($ListCell[$i]['state'] == "X") {
             $fullCount++;
         }
-        if ($ListCell["cell" . $i]['state'] == "O") {
+        if ($ListCell[$i]['state'] == "O") {
             $fullCount++;
         }
     }
 
 
     foreach ($comb as $cellIndex) {
-        if ($ListCell["cell" . $cellIndex]['state'] == "X") {
+        if ($ListCell[$cellIndex]['state'] == "X") {
             $xCount++;
-        } else if ($ListCell["cell" . $cellIndex]['state'] == "O") {
+        } else if ($ListCell[$cellIndex]['state'] == "O") {
             $oCount++;
         }
+    }
 
-        $isGameEnded = false;
-        
-        if ($xCount == 3) {
-            $_SESSION['win'] = "Le joueur X a gagné";
-            $isGameEnded = true;
-        } else if ($oCount == 3) {
-            $_SESSION['win'] = "Le joueur O a gagné";
-            $isGameEnded = true;
-        } else if ($fullCount == 9) {
-            $_SESSION['win'] = "Egalité";
-            $isGameEnded = true;
-        }
+    $isGameEnded = false;
+    
+    if ($xCount == 3) {
+        $isGameEnded = true;
+        $_SESSION['win'] = "Le joueur X a gagné";
+    } else if ($oCount == 3) {
+        $isGameEnded = true;
+        $_SESSION['win'] = "Le joueur O a gagné";
+    } else if ($fullCount == 9) {
+        $_SESSION['win'] = "Egalité";
+        $isGameEnded = true;
     }
 }
 ?>
@@ -144,7 +144,7 @@ foreach ($winCombinations as $comb) {
         // Fonction qui actualise la page toutes les secondes
         setInterval(function() {
             location.reload();
-        }, 1000); // 1000 millisecondes = 1 seconde
+        }, 500);
     </script>
 </head>
 
@@ -172,7 +172,7 @@ foreach ($winCombinations as $comb) {
         <?php if ($isGameEnded == false){?>
             <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center">Au tour du joueur <?= $playerPlaying ?></h2>
         <?php } else {?>
-            <h2 id="tour" style="margin: 10px; margin-top: 7vh" class="text-center"><?= $_SESSION['win'] ?></h2> 
+            <h2 style="margin: 10px; margin-top: 7vh" class="text-center"><?= $_SESSION['win'] ?></h2> 
         <?php } ?>
 
         <?php if ($isGameEnded) { ?>
